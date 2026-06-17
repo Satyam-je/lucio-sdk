@@ -1,107 +1,128 @@
-# Lucio SDK
-**by Darpan, Inc.**
+Lucio SDK
 
-> No vault. Nothing stored. Nothing to steal.
+by Artéfacts, Inc.
 
-Lucio is an AI that tokenizes any signing credential and permanently discards the original. Every authentication happens fresh at the moment of use. Nothing sits anywhere to be stolen.
+«No vault. Nothing stored. Nothing to steal.»
 
-Drift lost $285M. Bybit lost $1.4B. Kelp DAO lost $292M. Same root cause every time — stored credentials.
+Lucio is a credential authorization platform designed for AI agents, automation systems, and enterprise workflows.
 
-Lucio eliminates that attack surface entirely.
-
----
-
-## How it works
-
-```
-Traditional agent:         API_KEY = "sk-abc123"  ← sitting there, waiting to be stolen
-                           
-With Lucio:                token = lucio.authenticate(agent_id, action)  ← one-time, then gone
-```
-
-Your agent never sees or stores the credential. Lucio's AI processes it on Darpan's servers, returns a one-time token valid for that single action only, then permanently discards everything.
+Instead of relying on long-lived credentials that remain stored indefinitely, Lucio generates authorization tokens at the moment of use and validates access through a centralized authorization layer.
 
 ---
 
-## Install
+Features
 
-```bash
+- Token-based authorization
+- Agent authentication
+- Permission validation
+- Token verification
+- Token revocation
+- Enterprise integration support
+- AutoGPT plugin support
+- Open-source SDK
+- Private backend architecture
+
+---
+
+Installation
+
 pip install lucio-sdk
-```
 
 ---
 
-## Quick start
+Quick Start
 
-```python
 import lucio
 
-# Initialize once
-lucio.init(enterprise_key="your_enterprise_key")
+lucio.init(
+    enterprise_key="your_enterprise_key"
+)
 
-# Authenticate any agent action — no credential stored anywhere
 token = lucio.authenticate(
-    agent_id="my_agent",
+    agent_id="agent_001",
     action="send_email"
 )
 
-# Token used once, then permanently gone
-```
+print(token)
 
 ---
 
-## AutoGPT Plugin
+Verify
 
-```python
-# Add to your AutoGPT .env
-LUCIO_ENTERPRISE_KEY=your_enterprise_key
+valid = lucio.verify(
+    token=token,
+    action="send_email"
+)
 
-# Add to your plugins list
-from plugins.autogpt.lucio_plugin import LucioPlugin
-```
-
-That's it. Every agent command is automatically intercepted and credentials replaced with one-time Lucio tokens. Nothing stored in your agent config ever again.
+print(valid)
 
 ---
 
-## Architecture
+Revoke
 
-```
-┌─────────────────────────────────────────┐
-│  OPEN SOURCE (this repo)                │
-│  ┌─────────────────────────────────┐    │
-│  │  Lucio SDK                      │    │
-│  │  lucio.authenticate()           │    │
-│  │  lucio.verify()                 │    │
-│  │  lucio.revoke()                 │    │
-│  └──────────────┬──────────────────┘    │
-└─────────────────┼───────────────────────┘
-                  │ API call
-┌─────────────────▼───────────────────────┐
-│  PROPRIETARY (Darpan servers)           │
-│  ┌─────────────────────────────────┐    │
-│  │  Lucio AI Core                  │    │
-│  │  Tokenization engine (E=W·X)    │    │
-│  │  Credential processing          │    │
-│  │  Permanent discard              │    │
-│  └─────────────────────────────────┘    │
-└─────────────────────────────────────────┘
-```
-
-The integration layer is fully open source — audit it, fork it, contribute to it.
-The core AI model runs on Darpan's servers — that's where the magic happens.
+lucio.revoke(
+    agent_id="agent_001"
+)
 
 ---
 
-## Enterprise
+Environment Variable
 
-Lucio is a B2B enterprise product. Pricing is based on assets secured.
+The SDK automatically reads:
 
-Contact: **partnerships@darpan.io**
+LUCIO_API_URL
+
+Example:
+
+export LUCIO_API_URL=https://YOUR_SERVER_URL_HERE
 
 ---
 
-## License
+Architecture
 
-MIT — open source integration layer only.
-Core model is proprietary to Darpan, Inc.
+Application
+      │
+      ▼
+Lucio SDK
+      │
+      ▼
+Lucio API
+      │
+      ▼
+Authorization Engine
+
+The SDK is open source.
+
+Backend infrastructure remains private.
+
+---
+
+Repository Structure
+
+lucio-sdk/
+├── README.md
+├── setup.py
+├── .gitignore
+├── lucio/
+│   └── __init__.py
+├── plugins/
+│   └── autogpt/
+│       └── lucio_plugin.py
+└── examples/
+    └── example.py
+
+---
+
+Company
+
+Artéfacts, Inc.
+
+For enterprise inquiries:
+
+partnerships@artefacts.ai
+
+---
+
+License
+
+MIT License
