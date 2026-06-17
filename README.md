@@ -1,26 +1,10 @@
 Lucio SDK
 
-by Artéfacts, Inc.
+Built by Artéfacts, Inc.
 
-«No vault. Nothing stored. Nothing to steal.»
+Lucio is a lightweight Python SDK for integrating token-based authorization, agent authentication, and secure action verification into AI systems, automation workflows, and enterprise applications.
 
-Lucio is a credential authorization platform designed for AI agents, automation systems, and enterprise workflows.
-
-Instead of relying on long-lived credentials that remain stored indefinitely, Lucio generates authorization tokens at the moment of use and validates access through a centralized authorization layer.
-
----
-
-Features
-
-- Token-based authorization
-- Agent authentication
-- Permission validation
-- Token verification
-- Token revocation
-- Enterprise integration support
-- AutoGPT plugin support
-- Open-source SDK
-- Private backend architecture
+The SDK provides a simple interface for communicating with a Lucio authorization server while keeping implementation details abstracted behind a clean API.
 
 ---
 
@@ -35,7 +19,7 @@ Quick Start
 import lucio
 
 lucio.init(
-    enterprise_key="your_enterprise_key"
+    enterprise_key="YOUR_ENTERPRISE_KEY"
 )
 
 token = lucio.authenticate(
@@ -47,18 +31,31 @@ print(token)
 
 ---
 
-Verify
+Authentication
+
+Request a temporary authorization token.
+
+token = lucio.authenticate(
+    agent_id="agent_001",
+    action="send_email"
+)
+
+---
+
+Verification
+
+Verify whether a token is valid for a specific action.
 
 valid = lucio.verify(
     token=token,
     action="send_email"
 )
 
-print(valid)
-
 ---
 
-Revoke
+Revocation
+
+Invalidate active authorization tokens.
 
 lucio.revoke(
     agent_id="agent_001"
@@ -66,34 +63,13 @@ lucio.revoke(
 
 ---
 
-Environment Variable
+Configuration
 
-The SDK automatically reads:
-
-LUCIO_API_URL
-
-Example:
+Lucio automatically reads the API endpoint from the environment.
 
 export LUCIO_API_URL=https://YOUR_SERVER_URL_HERE
 
----
-
-Architecture
-
-Application
-      │
-      ▼
-Lucio SDK
-      │
-      ▼
-Lucio API
-      │
-      ▼
-Authorization Engine
-
-The SDK is open source.
-
-Backend infrastructure remains private.
+If not specified, the SDK uses the default value defined in "lucio/__init__.py".
 
 ---
 
@@ -113,16 +89,40 @@ lucio-sdk/
 
 ---
 
-Company
+AutoGPT Integration
 
-Artéfacts, Inc.
+The repository includes an AutoGPT plugin that demonstrates how Lucio can be integrated into agent-based systems.
 
-For enterprise inquiries:
+from plugins.autogpt.lucio_plugin import LucioPlugin
 
-partnerships@artefacts.ai
+---
+
+Development Status
+
+Current version:
+
+v0.1.0-alpha
+
+This repository contains the public SDK layer.
+
+Server-side infrastructure, authorization engines, and deployment configurations are maintained separately.
+
+---
+
+Support
+
+support@YOUR_DOMAIN_HERE
+
+---
+
+Documentation
+
+https://YOUR_DOMAIN_HERE/docs
 
 ---
 
 License
 
 MIT License
+
+Copyright (c) Artéfacts, Inc.
