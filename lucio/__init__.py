@@ -24,7 +24,7 @@ from typing import Optional
 
 LUCIO_API_URL = os.getenv(
     "LUCIO_API_URL",
-    "https://YOUR_SERVER_URL_HERE"
+    "https://588cafe7-29dd-4a77-a5f0-398d0960bb0b-00-2gtgxvru5zcvm.sisko.replit.dev:8000"
 )
 
 
